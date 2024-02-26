@@ -1,0 +1,29 @@
+
+
+
+
+
+IAC flow
+
+- create s3 bucket spark-streaming-data
+- Disable Block pubic access option
+- Add policy in permission section 
+
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1708964691216",
+    "Statement": [
+        {
+            "Sid": "Stmt1708964685647",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": "arn:aws:s3:::smartcity-spark-streaming-data/*"
+        }
+    ]
+}
+
