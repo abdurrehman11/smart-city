@@ -163,7 +163,7 @@ def simulate_journey(producer, vehicle_id):
         # print(weather_data)
         # print(emergency_incident_data)
 
-        time.sleep(5)
+        time.sleep(1)
 
 if __name__ == "__main__":
     VEHICLE_ID = "Vehicle-FDX-9667"
