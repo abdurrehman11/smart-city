@@ -6,15 +6,15 @@
 - kafka-topics --delete --topic gps_data --bootstrap-server broker:29092
 - kafka-console-consumer --bootstrap-server broker:29092 --topic emergency_data --from-beginning
 
+aws s3api head-object --bucket  --key your/object/key
+
+- python3 main.py  (to produce data in kafka topics)
 
 - docker exec -it smart-city-spark-master-1 spark-submit \
 --master spark://spark-master:7077 \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.apache.hadoop:hadoop-aws:3.3.1,com.amazonaws:aws-java-sdk:1.11.469 \
 jobs/spark-city.py
 
-
-
-IAC flow
 
 - create s3 bucket spark-streaming-data
 - Disable Block pubic access option
