@@ -97,8 +97,12 @@ your data using `AWS Athena`
 
 - Create an ETL in AWS Glue using `glue_jobs/glue_insert_to_redshift.py` to extract data from s3, transform it and load it into redshift table.
 
+# Clean Resources
+- Run the `redshift/delete_redshift_resources.py` to remove the redshift cluster and relevant resources.
+- Manually delete all the AWS Glue crawlers and ETL jobs.
+- Run the `docker-compose down` to stop all the containers locally.
 
-# Resources
+# References
 - https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect-redshift-home.html
 - https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-launch-sample-cluster.html
 - https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-an-etl-service-pipeline-to-load-data-incrementally-from-amazon-s3-to-amazon-redshift-using-aws-glue.html
