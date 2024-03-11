@@ -5,7 +5,7 @@ real-time using Spark streaming and store in AWS S3 bucket. After that we run th
 and store analytics in AWS redshift and which can be connected to PowerBI to give real time analytics dashboard.
 
 # Smart City Pipeline Architecture
-![Image Alt Text](smart_city_architecture.png)
+![Image Alt Text](images/smart_city_architecture.png)
 
 # How to Setup and Run Project
 
@@ -14,7 +14,7 @@ and store analytics in AWS redshift and which can be connected to PowerBI to giv
 cd smart-city
 ```
 
-- Rename `aws_config.py` to `config.py` and replace aws credentials with your AWS user credentials.
+- Rename `smartcity.env` to `.env` and replace all the required credentials with your respective aws credentials.
 
 - Create a virtual env and activate it and then install required packages, replace `venv_name` with any prefered name
 ```bash 
@@ -74,8 +74,31 @@ kafka-topics --delete --topic gps_data --bootstrap-server broker:29092
 kafka-console-consumer --bootstrap-server broker:29092 --topic <topic_name> --from-beginning
 ```
 
+# ETL Pipeline Architecture
+![Image Alt Text](images/etl_architecture.png)
+
+# ETL Pipeline Data Flow
+![Image Alt Text](images/etl_dataflow.png)
+
+Current ETL implementation does not have lambda service integrated as shown above in diagram.
+
+## S3-to-S3 ETL
 - Now, create an `AWS Glue Crawler` and link the S3 bucket path with it and once you run the crawler, you will be able to query
 your data using `AWS Athena`
 
-- Finally, create a `redshift cluster` and create a schema linked with AWS Glue database. Make sure the redshift IAM role have access
-to AWS S3 and Glue services. 
+- Create an ETL in AWS Glue using `glue_jobs/smart_city_read_from_s3.py` script to extract data from s3, transform it and load it into s3.
+
+## S3-to-Redshift ETL
+- Now, create an `AWS Glue Crawler` and link it with redshift table and crawl it.
+
+- Create a `redshift cluster` using `redshift/create_redshift_cluster.py` script and create a database in it. Attach the IAM role with AWS s3 access to redshift cluster.
+
+- Create an `AWS Glue connection` with Redshift to crawl redshift table. Test connection by attaching an IAM role with permissions of S3, Glue and Redshift.
+
+- Create an ETL in AWS Glue using `glue_jobs/glue_insert_to_redshift.py` to extract data from s3, transform it and load it into redshift table.
+
+
+# Resources
+- https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect-redshift-home.html
+- https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-launch-sample-cluster.html
+- https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/build-an-etl-service-pipeline-to-load-data-incrementally-from-amazon-s3-to-amazon-redshift-using-aws-glue.html
